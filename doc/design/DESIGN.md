@@ -208,3 +208,4 @@ AISudoLogic/
 7. **SwiftData 持久化**:保存/恢复、暂停恢复、完成归档
 8. **macOS 适配**:键盘输入、窗口缩放、macOS 专属布局
 9. **打磨**:动画、无障碍标签(每格 `accessibilityLabel`)、深浅色
+
