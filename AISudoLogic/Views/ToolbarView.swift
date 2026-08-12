@@ -24,7 +24,8 @@ struct ToolbarView: View {
     var onPin: (() -> Void)? = nil
 
     var body: some View {
-        HStack(spacing: 16) {
+        // 按钮均分整行宽度:窄窗口下 8 个按钮仍能等宽排满,无截断。
+        HStack(spacing: 4) {
             toolButton(
                 title: "笔记",
                 systemImage: isNoteMode ? "pencil.circle.fill" : "pencil.circle",
@@ -52,7 +53,7 @@ struct ToolbarView: View {
             }
 #endif
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 8)
     }
 
     private func toolButton(
@@ -69,7 +70,7 @@ struct ToolbarView: View {
                 Text(title)
                     .font(.caption2)
             }
-            .frame(minWidth: 44, minHeight: 36)
+            .frame(maxWidth: .infinity, minHeight: 36)
             .foregroundStyle(textColor(isActive: isActive, isEnabled: isEnabled))
         }
         .buttonStyle(.plain)

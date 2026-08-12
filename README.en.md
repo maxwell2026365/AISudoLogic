@@ -4,6 +4,16 @@ An AI-powered Sudoku game for **macOS** and **iOS**.
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="./doc/image/home.png" alt="Main menu" width="220"/>
+  <img src="./doc/image/shudu.png" alt="Game board" width="220"/>
+  <img src="./doc/image/AI教练.png" alt="AI Coach" width="220"/>
+</p>
+
+---
+
 ## 1. Problem Statement
 
 Traditional Sudoku games offer only a simple "fill - check - complete" loop, leaving players stranded when facing difficult boards. AISudoLogic addresses the core problems:

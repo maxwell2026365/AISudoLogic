@@ -24,22 +24,16 @@ struct GameView: View {
         GeometryReader { geo in
             // AI 提示区是否占据布局(有内容或占位时)。
             let hintVisible = viewModel.hintReason != nil || viewModel.showHintPlaceholder
-            // 数字键盘铺满窗口后的实际宽度(窗口宽 520 - 两侧 12 padding)。
+            // 数字键盘铺满窗口后的实际宽度(窗口宽 - 两侧 12 padding)。
             let contentWidth = geo.size.width - 24
-            // 顶部栏 + 工具栏 + 数字键盘的固定高度预算(压缩按钮高度后)。
-            let chromeHeight: CGFloat = 132
-            // AI 提示区展开时预留的高度(标题行 + 紧凑滚动区 + 边距)。
-            let hintReserve: CGFloat = hintVisible ? 140 : 0
-            // 剩余可给棋盘的高度,确保总高不超窗口(防止 Auto Layout 冲突崩溃)。
-            let availableHeight = max(geo.size.height - chromeHeight - hintReserve, 260)
-            // 棋盘边长:受高度约束,尽量逼近数字键盘宽度,实现棋盘加宽。
-            let boardSide: CGFloat = {
-                #if os(macOS)
-                return min(contentWidth, availableHeight)
-                #else
-                return min(geo.size.width, availableHeight)
-                #endif
-            }()
+            // 顶栏 + 底部区块(工具栏 + 数字键盘)的固定高度预算。
+            let chromeHeight = AppLayout.chromeHeight
+            // AI 提示区展开时预留的高度(固定值,布局稳定)。
+            let hintReserve: CGFloat = hintVisible ? AppLayout.hintHeight : 0
+            // 剩余可给棋盘的高度,精确包含棋盘卡片自身的纵向 padding(上 8 + 下 8)。
+            let availableHeight = max(geo.size.height - chromeHeight - hintReserve - AppLayout.boardPadding, 260)
+            // 棋盘边长:同时受宽度与高度约束,填入全部可用空间且保持正方形。
+            let boardSide = min(contentWidth, availableHeight)
 
             VStack(spacing: 0) {
                 topBar
@@ -333,22 +327,23 @@ struct HintReasonBanner: View {
                 }
                 Spacer()
             }
-            // 解释文本:渲染 markdown,超出一行高度时内部滚动。
+            .frame(height: AppLayout.hintTitleHeight)
+            // 解释文本:渲染 markdown,在固定高度卡片内滚动,保证提示区高度稳定。
             ScrollView(showsIndicators: true) {
                 MarkdownBubble(markdown: reason)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .textSelection(.enabled)
             }
-            .frame(maxHeight: 106)
+            .frame(maxHeight: .infinity)
         }
         .padding(10)
+        .frame(height: AppLayout.hintHeight)
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .stroke(Color.accentColor.opacity(0.35), lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.15), radius: 6, y: 2)
-        .padding(.top, 8)
     }
 }
 

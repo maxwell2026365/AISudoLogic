@@ -37,11 +37,11 @@ struct SudoLogicApp: App {
 #if os(macOS)
                 .onAppear {
                     pinManager.applyLevel()
-                    // 锁定窗口尺寸:多次尝试等待窗口就绪,强制 520x800。
+                    // 锁定窗口尺寸:多次尝试等待窗口就绪,强制黄金比例。
                     for delay in [0.3, 0.8, 1.5, 2.5] {
                         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                             guard let window = NSApp?.windows.first else { return }
-                            let fixed = NSSize(width: 520, height: 800)
+                            let fixed = NSSize(width: AppLayout.windowWidth, height: AppLayout.windowHeight)
                             window.contentMinSize = fixed
                             window.contentMaxSize = fixed
                             window.setContentSize(fixed)
