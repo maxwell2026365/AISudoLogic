@@ -111,8 +111,8 @@ struct ContentView: View {
             }
         }
 #if os(macOS)
-        // 限制内容尺寸,防止窗口被内容撑大/拉宽。
-        .frame(maxWidth: 520, maxHeight: 800)
+        // 限制内容尺寸,防止窗口被内容撑大/拉宽(黄金比例)。
+        .frame(maxWidth: AppLayout.windowWidth, maxHeight: AppLayout.windowHeight)
 #endif
         .onChange(of: viewModel.isCompleted) { completed in
             if completed {
@@ -135,9 +135,9 @@ struct ContentView: View {
     }
 
 #if os(macOS)
-    /// 强制窗口为固定尺寸,防止内容撑大。
+    /// 强制窗口为固定尺寸,防止内容撑大(黄金比例)。
     private func lockWindowSize() {
-        let fixed = NSSize(width: 520, height: 800)
+        let fixed = NSSize(width: AppLayout.windowWidth, height: AppLayout.windowHeight)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             guard let window = NSApp?.windows.first else { return }
             window.contentMinSize = fixed

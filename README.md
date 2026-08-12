@@ -4,6 +4,16 @@
 
 ---
 
+## 界面预览
+
+<p align="center">
+  <img src="./doc/image/home.png" alt="主菜单" width="220"/>
+  <img src="./doc/image/shudu.png" alt="游戏界面" width="220"/>
+  <img src="./doc/image/AI教练.png" alt="AI 教练" width="220"/>
+</p>
+
+---
+
 ## 一、项目解决的问题
 
 传统数独游戏通常只有"填数 - 检查 - 完成"的单一流程,玩家在遇到难题时缺少有效的引导。AISudoLogic 解决的核心问题:
